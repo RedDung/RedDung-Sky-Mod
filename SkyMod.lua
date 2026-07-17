@@ -15,7 +15,7 @@ local MiscTab = Window:CreateTab("Misc", 4483362456)
 -- Phần Sky Mod (Tab Main)
 local SkySection = MainTab:CreateSection("Cấu hình Bầu trời")
 
-local assetId = "rbxassetid://81882138179294"
+local assetId = "rbxassetid://84412922438354"
 
 MainTab:CreateToggle({
    Name = "Bật bầu trời Custom",
