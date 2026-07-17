@@ -1,4 +1,4 @@
--- RedDung0411 Hub | Sky & Utility (Update v2)
+-- RedDung0411 Hub | Sky & Utility (Update v3 - Fixed Ratio)
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
@@ -11,9 +11,9 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("Sky Mod", 4483362456)
 local MiscTab = Window:CreateTab("Misc", 4483362456)
 
-local assetId = "rbxassetid://84412922438354" -- ID ảnh của bạn
+local assetId = "rbxassetid://84412922438354" 
 
--- Biến để lưu trữ đối tượng GUI
+-- Biến lưu trữ đối tượng GUI
 local SkyGui = nil
 
 MainTab:CreateSection("Cấu hình Bầu trời (Screen Overlay)")
@@ -29,15 +29,18 @@ MainTab:CreateToggle({
          SkyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
          local ImageLabel = Instance.new("ImageLabel", SkyGui)
-         ImageLabel.Size = UDim2.new(1, 0, 1, 0)
+         -- Dùng Size lớn hơn 1 một chút để ảnh tràn viền hoàn toàn
+         ImageLabel.Size = UDim2.new(1.2, 0, 1.2, 0)
+         ImageLabel.Position = UDim2.new(-0.1, 0, -0.1, 0)
          ImageLabel.BackgroundTransparency = 1
          ImageLabel.Image = assetId
-         ImageLabel.ScaleType = Enum.ScaleType.Fit -- Giữ đúng tỉ lệ ảnh
-         ImageLabel.ZIndex = -1 -- Đẩy xuống dưới menu
          
-         Rayfield:Notify({Title = "Đã bật", Content = "Ảnh nền đã được hiển thị!", Duration = 3})
+         -- Crop sẽ tự động lấp đầy màn hình và cắt phần dư, giúp ảnh đồng đều hơn
+         ImageLabel.ScaleType = Enum.ScaleType.Crop 
+         ImageLabel.ZIndex = -1 
+         
+         Rayfield:Notify({Title = "Đã bật", Content = "Ảnh đã được phủ đều màn hình!", Duration = 3})
       else
-         -- Xóa GUI khi tắt
          if SkyGui then
             SkyGui:Destroy()
             SkyGui = nil
@@ -53,6 +56,6 @@ MiscTab:CreateButton({
    Name = "Reset UI",
    Callback = function()
       if SkyGui then SkyGui:Destroy() end
-      Rayfield:Notify({Title = "Đã reset", Content = "Đã dọn dẹp các layer ảnh.", Duration = 3})
+      Rayfield:Notify({Title = "Đã reset", Content = "Đã dọn dẹp layer ảnh.", Duration = 3})
    end,
 })
